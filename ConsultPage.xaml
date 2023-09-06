@@ -25,14 +25,26 @@
         <ListView x:Name="DataBaseConsultList" 
                   Grid.Column="0"
                   Grid.ColumnSpan="4" 
-                  Grid.Row="2">
+                  Grid.Row="2" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding SecondName}" Width="160"/>
-                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="160"/>
-                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding MiddleName}" Width="160"/>
-                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Telephone}" Width="160"/>
-                    <GridViewColumn Header="Паспортные данные" DisplayMemberBinding="{Binding DataPassport}" Width="160"/>
+                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding Path=SecondName}" Width="160"/>
+                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Path=Name}" Width="160"/>
+                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding Path=MiddleName}" Width="160"/>
+                    <GridViewColumn Header="Телефон" Width="160">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBox    x:Name="ChangeTelephoneText"
+                                                Text="{Binding Path=Telephone}" 
+                                                TextWrapping="Wrap" 
+                                                Margin="5"
+                                                Foreground="DarkOrange" LostKeyboardFocus="ChangePhone"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Паспортные данные" DisplayMemberBinding="{Binding Path=DataPassport}" Width="160"/>
                 </GridView>
             </ListView.View>
         </ListView>

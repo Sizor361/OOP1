@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,13 @@ namespace OOP1
         public ConsultPage()
         {
             InitializeComponent();
+        }
+
+        private void ChangePhone(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            Consult consult = new Consult();
+            
+            consult.Rewrite();
         }
     }
 }

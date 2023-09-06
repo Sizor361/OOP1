@@ -28,11 +28,76 @@
                   Grid.Row="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding}" Width="160"/>
-                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding}" Width="160"/>
-                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding}" Width="160"/>
-                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding}" Width="160"/>
-                    <GridViewColumn Header="Паспортные данные" DisplayMemberBinding="{Binding}" Width="160"/>
+                    <GridViewColumn Header="Имя" Width="160">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBox    Name="ChangeNameText"
+                                                Text="{Binding Path=Name}" 
+                                                TextWrapping="Wrap" 
+                                                Margin="5"
+                                                Foreground="DarkOrange">
+                                    </TextBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Фамилия" Width="160">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBox    Name="ChangeSecondText"
+                                                Text="{Binding Path=SecondName}" 
+                                                TextWrapping="Wrap" 
+                                                Margin="5"
+                                                Foreground="DarkOrange">
+                                    </TextBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Отчество" Width="160">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBox    Name="ChangeMiddleNameText"
+                                                Text="{Binding Path=MiddleName}" 
+                                                TextWrapping="Wrap" 
+                                                Margin="5"
+                                                Foreground="DarkOrange">
+                                    </TextBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Телефон" Width="160">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBox    Name="ChangeTelephoneText"
+                                                Text="{Binding Path=Telephone}" 
+                                                TextWrapping="Wrap" 
+                                                Margin="5"
+                                                Foreground="DarkOrange">
+                                    </TextBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Паспортные данные" Width="160">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBox    Name="ChangeDataPassportText"
+                                                Text="{Binding Path=DataPassport}" 
+                                                TextWrapping="Wrap" 
+                                                Margin="5"
+                                                Foreground="DarkOrange">
+                                    </TextBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

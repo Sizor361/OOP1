@@ -5,34 +5,35 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media.Media3D;
 
 namespace OOP1
 {
-    class DataBase
+    abstract class DataBase
     {
 
         #region Переменные
 
-        static List<DataBase> allRecords;
-        static string pathToFile;
-        static ushort indexDB;
+        public List<DataBase> allRecords = new List<DataBase>();
+        public static string pathToFile;
+        public ushort indexDB = 0;
 
         #endregion
 
-        #region Объявление переменных
+        #region Объявление статических переменных
 
         static DataBase()
         {
-            allRecords = new List<DataBase>();
             pathToFile = "DataBase.txt";
-            indexDB = 0;
         }
+
 
         #endregion
 
         #region Поля
 
-        private string secondName;
+        public string secondName;
 
         private string name;
 
@@ -46,15 +47,15 @@ namespace OOP1
 
         #region Свойства
 
-        protected string SecondName { get; set; }
+        public string SecondName { get; set; }
 
-        protected string Name { get; set; }
+        public string Name { get; set; }
 
-        protected string MiddleName { get; set; }
+        public string MiddleName { get; set; }
 
-        protected string Telephone { get; set; }
+        public virtual string Telephone { get; set; }
 
-        protected string DataPassport { get; set; }
+        public string DataPassport { get; set; }
 
         #endregion
 
@@ -68,13 +69,13 @@ namespace OOP1
         /// <param name="middleName">Отчество</param>
         /// <param name="telephone">Телефон</param>
         /// <param name="dataPassport">Паспортные данные</param>
-        protected DataBase(string secondName, string name, string middleName, string telephone, string dataPassport)
+        public DataBase(string secondName, string name, string middleName, string telephone, string dataPassport)
         {
-            this.secondName = secondName;
-            this.name = name;
-            this.middleName = middleName;
-            this.telephone = telephone;
-            this.dataPassport = dataPassport;
+            SecondName = secondName;
+            Name = name;
+            MiddleName = middleName;
+            Telephone = telephone;
+            DataPassport = dataPassport;
         }
 
         /// <summary>
@@ -89,7 +90,7 @@ namespace OOP1
 
         #region Методы
 
-        public List<DataBase> RefreshDB()
+        public virtual List<DataBase> RefreshDB()
         {
 
             if (allRecords != null)
@@ -97,16 +98,17 @@ namespace OOP1
                 allRecords.Clear();
             }
 
-            using (StreamReader sr = new StreamReader(pathToFile))
-            {
-                while (!sr.EndOfStream)
-                {
-                    string[] args = sr.ReadLine().Split('#');
+            //using (StreamReader sr = new StreamReader(pathToFile))
+            //{
+            //    while (!sr.EndOfStream)
+            //    {
+            //        string[] args = sr.ReadLine().Split('#');
 
-                    allRecords.Add(new DataBase(args[0], args[1], args[2], args[3], args[4]));
-                }
-                sr.Close();
-            }
+            //        allRecords.Add(new DataBase(args[0], args[1], args[2], args[3], args[4]));
+                    
+            //    }
+            //    sr.Close();
+            //}
 
             return allRecords;
         }
@@ -119,6 +121,11 @@ namespace OOP1
                     $"{telephone}#{dataPassport}#");
                 sw.Close();
             }
+        }
+
+        public string WriteOrder()
+        {
+            return $"{SecondName}#{Name}#{MiddleName}#{Telephone}#{DataPassport}#";
         }
 
         #endregion

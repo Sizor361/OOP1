@@ -9,17 +9,13 @@
         Title="ООП 1 часть" 
         
         MinHeight="450"
-        MaxHeight="450"
+        MaxHeight="600"
         
         MinWidth="800"
-        MaxWidth="800"
+        MaxWidth="1000"
         
         Height="450" 
         Width="800">
-
-    <Window.Resources>
-        <local:DataBase x:Key="AllDataBase"/>
-    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>

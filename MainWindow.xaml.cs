@@ -28,12 +28,11 @@ namespace OOP1
         {
             InitializeComponent();
 
-            DataBase dataBase = new DataBase();
-            List<DataBase> list = new List<DataBase>();
-            list = dataBase.RefreshDB();
+            DataBase consult = new Consult();
+            DataBase manager = new Manager();
 
-            managerPage.DataBaseManagerList.ItemsSource = list;
-            consultPage.DataBaseConsultList.ItemsSource = list;
+            managerPage.DataBaseManagerList.ItemsSource = manager.RefreshDB();
+            consultPage.DataBaseConsultList.ItemsSource = consult.RefreshDB();
         }
 
         private void Consult_Click(object sender, RoutedEventArgs e)
