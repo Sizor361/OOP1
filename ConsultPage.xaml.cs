@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
@@ -21,16 +22,20 @@ namespace OOP1
     /// </summary>
     public partial class ConsultPage : Page
     {
+        Consult consult = new Consult();
+        ObservableCollection<Consult> consultsOrders;
+
         public ConsultPage()
         {
             InitializeComponent();
+            consultsOrders = consult.RefreshDBFull();
+
+            DataContext = this;
         }
 
         private void ChangePhone(object sender, KeyboardFocusChangedEventArgs e)
         {
-            Consult consult = new Consult();
-            
-            consult.Rewrite();
+            consult.Rewrite(consultsOrders);
         }
     }
 }

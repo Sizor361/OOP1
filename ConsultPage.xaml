@@ -36,7 +36,7 @@
                             <DataTemplate>
                                 <StackPanel>
                                     <TextBox    x:Name="ChangeTelephoneText"
-                                                Text="{Binding Path=Telephone}" 
+                                                Text="{Binding Telephone}" 
                                                 TextWrapping="Wrap" 
                                                 Margin="5"
                                                 Foreground="DarkOrange" LostKeyboardFocus="ChangePhone"/>

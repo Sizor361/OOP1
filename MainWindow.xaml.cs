@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
@@ -28,11 +29,15 @@ namespace OOP1
         {
             InitializeComponent();
 
-            DataBase consult = new Consult();
-            DataBase manager = new Manager();
+            Consult consult = new Consult();
+            Manager manager = new Manager();
+
+            
 
             managerPage.DataBaseManagerList.ItemsSource = manager.RefreshDB();
             consultPage.DataBaseConsultList.ItemsSource = consult.RefreshDB();
+
+            //MessageBox.Show($"{consult.consultsOrders.Count}");
         }
 
         private void Consult_Click(object sender, RoutedEventArgs e)

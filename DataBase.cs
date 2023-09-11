@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -15,9 +16,7 @@ namespace OOP1
 
         #region Переменные
 
-        public List<DataBase> allRecords = new List<DataBase>();
-        public static string pathToFile;
-        public ushort indexDB = 0;
+        protected static string pathToFile;
 
         #endregion
 
@@ -33,15 +32,15 @@ namespace OOP1
 
         #region Поля
 
-        public string secondName;
+        protected string secondName;
 
-        private string name;
+        protected string name;
 
-        private string middleName;
+        protected string middleName;
 
-        private string telephone;
+        protected string telephone;
 
-        private string dataPassport;
+        protected string dataPassport;
 
         #endregion
 
@@ -90,30 +89,10 @@ namespace OOP1
 
         #region Методы
 
-        public virtual List<DataBase> RefreshDB()
-        {
-
-            if (allRecords != null)
-            {
-                allRecords.Clear();
-            }
-
-            //using (StreamReader sr = new StreamReader(pathToFile))
-            //{
-            //    while (!sr.EndOfStream)
-            //    {
-            //        string[] args = sr.ReadLine().Split('#');
-
-            //        allRecords.Add(new DataBase(args[0], args[1], args[2], args[3], args[4]));
-                    
-            //    }
-            //    sr.Close();
-            //}
-
-            return allRecords;
-        }
-
-        public void NewRecord()
+        /// <summary>
+        /// Новая запись в БД
+        /// </summary>
+        protected void NewRecord()
         {
             using (StreamWriter sw = new StreamWriter(pathToFile, true))
             {
@@ -123,7 +102,11 @@ namespace OOP1
             }
         }
 
-        public string WriteOrder()
+        /// <summary>
+        /// Порядок записи в БД
+        /// </summary>
+        /// <returns></returns>
+        protected string WriteOrder()
         {
             return $"{SecondName}#{Name}#{MiddleName}#{Telephone}#{DataPassport}#";
         }
