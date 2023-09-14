@@ -42,6 +42,14 @@ namespace OOP1
 
         protected string dataPassport;
 
+        protected DateTime timeChangeOrder;
+
+        protected string whichDataChange;
+
+        protected string typeOfChange;
+
+        protected string whoChanged;
+
         #endregion
 
         #region Свойства
@@ -52,9 +60,17 @@ namespace OOP1
 
         public string MiddleName { get; set; }
 
-        public virtual string Telephone { get; set; }
+        public string Telephone { get; set; }
 
         public string DataPassport { get; set; }
+
+        public DateTime TimeChangeOrder { get; set; }
+
+        public string WhichDataChange { get; set; }
+
+        public string TypeOfChange { get; set; }
+
+        public string WhoChanged { get; set; }
 
         #endregion
 
@@ -68,19 +84,41 @@ namespace OOP1
         /// <param name="middleName">Отчество</param>
         /// <param name="telephone">Телефон</param>
         /// <param name="dataPassport">Паспортные данные</param>
-        public DataBase(string secondName, string name, string middleName, string telephone, string dataPassport)
+        /// <param name="timeChangeOrder">Время изменения</param>
+        /// <param name="whichDataChange">Какие данные изменились</param>
+        /// <param name="typeOfChange">Тип изменений</param>
+        /// <param name="whoChanged">Кто изменил</param>
+        public DataBase(string secondName, string name, string middleName, string telephone, string dataPassport, 
+            DateTime timeChangeOrder, string whichDataChange, string typeOfChange, string whoChanged)
         {
             SecondName = secondName;
             Name = name;
             MiddleName = middleName;
             Telephone = telephone;
             DataPassport = dataPassport;
+            TypeOfChange = typeOfChange;
+            WhoChanged = whoChanged;
+            TimeChangeOrder = timeChangeOrder;
+            WhichDataChange = whichDataChange;
+        }
+
+        /// <summary>
+        /// Констуктор для вывода на экран
+        /// </summary>
+        /// <param name="secondName">Фамилия</param>
+        /// <param name="name">Имя</param>
+        /// <param name="middleName">Отчество</param>
+        /// <param name="telephone">Телефон</param>
+        /// <param name="dataPassport">Паспортные данные</param>
+        public DataBase(string secondName, string name, string middleName, string telephone, string dataPassport) : 
+            this (secondName, name, middleName, telephone, dataPassport, new DateTime(), "", "", "")
+        {
         }
 
         /// <summary>
         /// Пустой конструктор
         /// </summary>
-        public DataBase() : this("", "", "", "", "")
+        public DataBase() : this("", "", "", "", "", new DateTime(), "", "", "")
         {
 
         }
@@ -90,25 +128,12 @@ namespace OOP1
         #region Методы
 
         /// <summary>
-        /// Новая запись в БД
-        /// </summary>
-        protected void NewRecord()
-        {
-            using (StreamWriter sw = new StreamWriter(pathToFile, true))
-            {
-                sw.WriteLine($"{secondName}#{name}#{middleName}#" +
-                    $"{telephone}#{dataPassport}#");
-                sw.Close();
-            }
-        }
-
-        /// <summary>
         /// Порядок записи в БД
         /// </summary>
         /// <returns></returns>
         protected string WriteOrder()
         {
-            return $"{SecondName}#{Name}#{MiddleName}#{Telephone}#{DataPassport}#";
+            return $"{SecondName}#{Name}#{MiddleName}#{Telephone}#{DataPassport}#{TimeChangeOrder}#{WhichDataChange}#{TypeOfChange}#{WhoChanged}#";
         }
 
         #endregion

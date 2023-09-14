@@ -9,13 +9,13 @@
         Title="ООП 1 часть" 
         
         MinHeight="450"
-        MaxHeight="600"
+        MaxHeight="800"
         
-        MinWidth="800"
-        MaxWidth="1000"
+        MinWidth="600"
+        MaxWidth="2000"
         
-        Height="450" 
-        Width="800">
+        Height="600" 
+        Width="1000">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -34,13 +34,11 @@
                 Grid.Column="1" 
                 Grid.Row="1"
                 Margin="5,5,5,5" 
-                Background="Black" 
                 Click="Consult_Click">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Grid>
-                        <Rectangle Fill="#FF717171">
-                        </Rectangle>
+                        <Rectangle Fill="#FF717171"></Rectangle>
                         <TextBlock Text="Консультант" 
                                    VerticalAlignment="Center" 
                                    HorizontalAlignment="Center" 

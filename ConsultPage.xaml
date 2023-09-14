@@ -28,9 +28,9 @@
                   Grid.Row="2" >
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding Path=SecondName}" Width="160"/>
-                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Path=Name}" Width="160"/>
-                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding Path=MiddleName}" Width="160"/>
+                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding SecondName}" Width="160"/>
+                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="160"/>
+                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding MiddleName}" Width="160"/>
                     <GridViewColumn Header="Телефон" Width="160">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -39,15 +39,19 @@
                                                 Text="{Binding Telephone}" 
                                                 TextWrapping="Wrap" 
                                                 Margin="5"
-                                                Foreground="DarkOrange" LostKeyboardFocus="ChangePhone"/>
+                                                Foreground="DarkOrange" 
+                                                LostFocus="ChangePhone"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Паспортные данные" DisplayMemberBinding="{Binding Path=DataPassport}" Width="160"/>
+                    <GridViewColumn Header="Паспортные данные" DisplayMemberBinding="{Binding DataPassport}"  Width="160"/>
+                    <GridViewColumn Header="Время изменения записи" DisplayMemberBinding="{Binding TimeChangeOrder}" Width="160"/>
+                    <GridViewColumn Header="Что поменялось" DisplayMemberBinding="{Binding WhichDataChange}" Width="160"/>
+                    <GridViewColumn Header="Тип изменений" DisplayMemberBinding="{Binding TypeOfChange}" Width="160"/>
+                    <GridViewColumn Header="Кто изменил" DisplayMemberBinding="{Binding WhoChanged}" Width="160"/>
                 </GridView>
             </ListView.View>
         </ListView>
-
     </Grid>
 </Page>

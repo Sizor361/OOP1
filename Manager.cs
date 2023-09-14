@@ -16,7 +16,6 @@ namespace OOP1
         #region Переменные
 
         public ObservableCollection<Manager> managerOrders = new ObservableCollection<Manager>();
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -30,17 +29,43 @@ namespace OOP1
         /// <param name="middleName">Отчество</param>
         /// <param name="telephone">Телефон</param>
         /// <param name="dataPassport">Данные паспорта</param>
-        public Manager(string secondName, string name, string middleName, string telephone, string dataPassport)
-            : base(secondName, name, middleName, telephone, dataPassport) { }
+        public Manager(string secondName, string name, string middleName, string telephone, string dataPassport,
+            DateTime timeChangeOrder, string whichDataChange, string typeOfChange, string whoChanged)
+            : base(secondName, name, middleName, telephone, dataPassport, timeChangeOrder, whichDataChange, typeOfChange, whoChanged)
+        {
+            
+        }
 
         /// <summary>
         /// Пустой конструктор
         /// </summary>
-        public Manager() : this("", "", "", "", "") { }
+        public Manager()
+        {
+            TimeChangeOrder = DateTime.Now;
+            TypeOfChange = "Новая запись";
+            WhoChanged = "Менеджер";
+        }
 
         #endregion
 
         #region Методы
+
+        /// <summary>
+        /// Перезаписываем в базу данных по новой
+        /// </summary>
+        /// <param name="managerOrders"></param>
+        public void Rewrite(ObservableCollection<Manager> managerOrders)
+        {
+
+            using (StreamWriter writer = new StreamWriter(pathToFile))
+            {
+                for (int i = 0; i < managerOrders.Count; i++)
+                {
+                    writer.WriteLine(managerOrders[i].WriteOrder());
+                }
+                writer.Close();
+            }
+        }
 
         /// <summary>
         /// Обновление базы данных (не ограниченные права)
@@ -60,24 +85,12 @@ namespace OOP1
                 {
                     string[] args = reader.ReadLine().Split('#');
 
-                    managerOrders.Add(new Manager(args[0], args[1], args[2], args[3], args[4]));
+                    managerOrders.Add(new Manager(args[0], args[1], args[2], args[3], args[4], Convert.ToDateTime(args[5]), args[6], args[7], args[8]));
                 }
                 reader.Close();
             }
 
             return managerOrders;
-        }
-
-        /// <summary>
-        /// То с чем не разобрался - должен обновлять местную БД
-        /// </summary>
-        /// <param name="prop"></param>
-        private void onPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
         }
 
         #endregion

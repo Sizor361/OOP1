@@ -28,26 +28,18 @@ namespace OOP1
         public MainWindow()
         {
             InitializeComponent();
-
-            Consult consult = new Consult();
-            Manager manager = new Manager();
-
-            
-
-            managerPage.DataBaseManagerList.ItemsSource = manager.RefreshDB();
-            consultPage.DataBaseConsultList.ItemsSource = consult.RefreshDB();
-
-            //MessageBox.Show($"{consult.consultsOrders.Count}");
         }
 
         private void Consult_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = consultPage;
+            consultPage.RefreshConsult();
         }
 
         private void Manager_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = managerPage;
+            managerPage.RefreshManager();
         }
     }
 }

@@ -10,10 +10,13 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
@@ -21,36 +24,58 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <Button x:Name="AddOrder"
+                Margin="5,-50,5,10" 
+                Background="Black" 
+                Width="90" 
+                Height="40" 
+                Grid.Column="5" Click="AddNewOrder">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Grid>
+                        <Rectangle Fill="#FF717171"></Rectangle>
+                        <TextBlock Text="Добавить запись" 
+                                   TextWrapping="Wrap" 
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Center" 
+                                   FontSize="15"/>
+                    </Grid>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
 
         <ListView x:Name="DataBaseManagerList" 
                   Grid.Column="0"
-                  Grid.ColumnSpan="4" 
+                  Grid.ColumnSpan="7" 
                   Grid.Row="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Имя" Width="160">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBox    Name="ChangeNameText"
-                                                Text="{Binding Path=Name}" 
-                                                TextWrapping="Wrap" 
-                                                Margin="5"
-                                                Foreground="DarkOrange">
-                                    </TextBox>
-                                </StackPanel>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
                     <GridViewColumn Header="Фамилия" Width="160">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
                                     <TextBox    Name="ChangeSecondText"
-                                                Text="{Binding Path=SecondName}" 
+                                                Text="{Binding SecondName}" 
                                                 TextWrapping="Wrap" 
                                                 Margin="5"
-                                                Foreground="DarkOrange">
+                                                Foreground="DarkOrange"
+                                                LostFocus="ChangeData">
+                                    </TextBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Имя" Width="160">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBox    Name="ChangeNameText"
+                            Text="{Binding Name}" 
+                            TextWrapping="Wrap" 
+                            Margin="5"
+                            Foreground="DarkOrange" 
+                            LostFocus="ChangeData">
                                     </TextBox>
                                 </StackPanel>
                             </DataTemplate>
@@ -61,10 +86,11 @@
                             <DataTemplate>
                                 <StackPanel>
                                     <TextBox    Name="ChangeMiddleNameText"
-                                                Text="{Binding Path=MiddleName}" 
+                                                Text="{Binding MiddleName}" 
                                                 TextWrapping="Wrap" 
                                                 Margin="5"
-                                                Foreground="DarkOrange">
+                                                Foreground="DarkOrange"
+                                                LostFocus="ChangeData">
                                     </TextBox>
                                 </StackPanel>
                             </DataTemplate>
@@ -75,10 +101,11 @@
                             <DataTemplate>
                                 <StackPanel>
                                     <TextBox    Name="ChangeTelephoneText"
-                                                Text="{Binding Path=Telephone}" 
+                                                Text="{Binding Telephone}" 
                                                 TextWrapping="Wrap" 
                                                 Margin="5"
-                                                Foreground="DarkOrange">
+                                                Foreground="DarkOrange"
+                                                LostFocus="ChangeData">
                                     </TextBox>
                                 </StackPanel>
                             </DataTemplate>
@@ -89,15 +116,20 @@
                             <DataTemplate>
                                 <StackPanel>
                                     <TextBox    Name="ChangeDataPassportText"
-                                                Text="{Binding Path=DataPassport}" 
+                                                Text="{Binding DataPassport}" 
                                                 TextWrapping="Wrap" 
                                                 Margin="5"
-                                                Foreground="DarkOrange">
+                                                Foreground="DarkOrange"
+                                                LostFocus="ChangeData">
                                     </TextBox>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn Header="Время изменения записи" DisplayMemberBinding="{Binding TimeChangeOrder}" Width="160"/>
+                    <GridViewColumn Header="Что поменялось" DisplayMemberBinding="{Binding WhichDataChange}" Width="160"/>
+                    <GridViewColumn Header="Тип изменений" DisplayMemberBinding="{Binding TypeOfChange}" Width="160"/>
+                    <GridViewColumn Header="Кто изменил" DisplayMemberBinding="{Binding WhoChanged}" Width="160"/>
                 </GridView>
             </ListView.View>
         </ListView>

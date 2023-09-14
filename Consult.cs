@@ -14,13 +14,12 @@ using System.Xml.Linq;
 
 namespace OOP1
 {
-    class Consult : DataBase, INotifyPropertyChanged
+    class Consult : DataBase
     {
 
         #region Переменные
 
         public ObservableCollection<Consult> consultsOrders = new ObservableCollection<Consult>();
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -34,18 +33,19 @@ namespace OOP1
         /// <param name="middleName">Отчество</param>
         /// <param name="telephone">Телефон</param>
         /// <param name="dataPassport">Данные паспорта</param>
-        public Consult(string secondName, string name, string middleName, string telephone, string dataPassport)
-            : base(secondName, name, middleName, telephone, dataPassport) 
+        public Consult(string secondName, string name, string middleName, string telephone, string dataPassport,
+            DateTime timeChangeOrder, string whichDataChange, string typeOfChange, string whoChanged)
+            : base(secondName, name, middleName, telephone, dataPassport, timeChangeOrder, whichDataChange, typeOfChange, whoChanged) 
         {
-            base.telephone = telephone;
-            onPropertyChanged("Telephone");
+
         }
 
         /// <summary>
         /// Пустой конструктор
         /// </summary>
-        public Consult() : this("", "", "", "", "") 
+        public Consult()
         {
+
         }
 
         #endregion
@@ -58,6 +58,7 @@ namespace OOP1
         /// <param name="consultsOrders"></param>
         public void Rewrite(ObservableCollection<Consult> consultsOrders)
         {
+
             using (StreamWriter writer = new StreamWriter(pathToFile))
             {
                 for (int i = 0; i < consultsOrders.Count; i++)
@@ -69,7 +70,7 @@ namespace OOP1
         }
 
         /// <summary>
-        /// Обновление базы данных (ограниченные права)
+        /// Обновление базы данных
         /// </summary>
         /// <param name="dataBase">Передаем сюда ObservableCollection, который будем потом получать обратно со значениями из БД</param>
         /// <returns></returns>
@@ -86,50 +87,12 @@ namespace OOP1
                 {
                     string[] args = reader.ReadLine().Split('#');
 
-                    consultsOrders.Add(new Consult(args[0], args[1], args[2], args[3], "****-******"));
+                    consultsOrders.Add(new Consult(args[0], args[1], args[2], args[3], args[4], Convert.ToDateTime(args[5]), args[6], args[7], args[8]));
                 }
                 reader.Close();
             }
 
             return consultsOrders;
-        }
-
-        /// <summary>
-        /// Обновление базы данных (без ограничений прав)
-        /// </summary>
-        /// <param name="dataBase">Передаем сюда ObservableCollection, который будем потом получать обратно со значениями из БД</param>
-        /// <returns></returns>
-        public ObservableCollection<Consult> RefreshDBFull()
-        {
-            if (consultsOrders != null)
-            {
-                consultsOrders.Clear();
-            }
-
-            using (StreamReader reader = new StreamReader(pathToFile))
-            {
-                while (!reader.EndOfStream)
-                {
-                    string[] args = reader.ReadLine().Split('#');
-
-                    consultsOrders.Add(new Consult(args[0], args[1], args[2], args[3], args[4]));
-                }
-                reader.Close();
-            }
-
-            return consultsOrders;
-        }
-
-        /// <summary>
-        /// То с чем не разобрался - должен обновлять местную БД
-        /// </summary>
-        /// <param name="prop"></param>
-        private void onPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
         }
 
         #endregion
