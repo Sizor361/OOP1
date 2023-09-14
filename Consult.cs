@@ -37,7 +37,7 @@ namespace OOP1
             DateTime timeChangeOrder, string whichDataChange, string typeOfChange, string whoChanged)
             : base(secondName, name, middleName, telephone, dataPassport, timeChangeOrder, whichDataChange, typeOfChange, whoChanged) 
         {
-
+            
         }
 
         /// <summary>
@@ -58,11 +58,13 @@ namespace OOP1
         /// <param name="consultsOrders"></param>
         public void Rewrite(ObservableCollection<Consult> consultsOrders)
         {
+            List<string> dataPassport = ReturnCorrcetData();
 
             using (StreamWriter writer = new StreamWriter(pathToFile))
             {
                 for (int i = 0; i < consultsOrders.Count; i++)
                 {
+                    consultsOrders[i].DataPassport = dataPassport[i];
                     writer.WriteLine(consultsOrders[i].WriteOrder());
                 }
                 writer.Close();
@@ -87,6 +89,11 @@ namespace OOP1
                 {
                     string[] args = reader.ReadLine().Split('#');
 
+                    if (args[4] != string.Empty)
+                    {
+                        args[4] = "****-******";
+                    }
+
                     consultsOrders.Add(new Consult(args[0], args[1], args[2], args[3], args[4], Convert.ToDateTime(args[5]), args[6], args[7], args[8]));
                 }
                 reader.Close();
@@ -95,7 +102,28 @@ namespace OOP1
             return consultsOrders;
         }
 
-        #endregion
+        /// <summary>
+        /// Прежде чем записать данные в БД - убираем звездочки
+        /// </summary>
+        private List<string> ReturnCorrcetData()
+        {
+            List<string> dataPassport = new List<string>();
+
+            using (StreamReader reader = new StreamReader(pathToFile))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string[] args = reader.ReadLine().Split('#');
+
+                    dataPassport.Add(args[4]);
+                }
+                reader.Close();
+            }
+
+            return dataPassport;
+        }
+
+        #endregion  
 
     }
 }

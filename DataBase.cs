@@ -16,7 +16,7 @@ namespace OOP1
 
         #region Переменные
 
-        protected static string pathToFile;
+        public static string pathToFile;
 
         #endregion
 

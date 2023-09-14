@@ -15,31 +15,55 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace OOP1
 {
     /// <summary>
     /// Логика взаимодействия для ConsultPage.xaml
     /// </summary>
-    public partial class ConsultPage : Page
+    public partial class ConsultPage : Page, ChangeOrder
     {
+        #region Переменные
+
         ObservableCollection<Consult> consultsOrders;
 
         List<Consult> oldConsultOrders = new List<Consult>();
 
         Consult consult = new Consult();
 
-        public ConsultPage()
+        #endregion
+
+        #region События
+
+        /// <summary>
+        /// Изменяем номер телефона
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChangePhone(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
-
-            RefreshConsult();
-
-            FillOldConsultOrders();
-
-            DataContext = this;
+            CheckAndWrite();
         }
 
+        /// <summary>
+        /// Когда заходим на страницу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EnterIntoPage(object sender, RoutedEventArgs e)
+        {
+            RefreshConsult();
+            FillOldOrders();
+        }
+
+        #endregion
+
+        #region Методы
+
+        /// <summary>
+        /// Обновление базы данных
+        /// </summary>
         public void RefreshConsult()
         {
             consultsOrders = consult.RefreshDB();
@@ -47,25 +71,34 @@ namespace OOP1
             DataBaseConsultList.ItemsSource = consultsOrders;
         }
 
-        private void FillOldConsultOrders()
+        /// <summary>
+        /// Часть другого метода для записи доп. инфы при изменении записи
+        /// </summary>
+        /// <param name="i">Передать счётчик цикла</param>
+        private void WriteNewData(int i)
         {
-
-            if (oldConsultOrders != null)
-            {
-                oldConsultOrders.Clear();
-            }
-
-            for (int i = 0; i < consultsOrders.Count; i++)
-            {
-                oldConsultOrders.Add(consultsOrders[i]);
-            }
-
+            consultsOrders[i].TimeChangeOrder = DateTime.Now;
+            consultsOrders[i].TypeOfChange = "Правка";
+            consultsOrders[i].WhoChanged = "Консультант";
         }
 
+        #endregion
+
+        #region Конструктор этого класса
+
+        public ConsultPage()
+        {
+            InitializeComponent();
+        }
+
+        #endregion
+
+        #region Интерфейс ChangeOrder - изменения записи
+
         /// <summary>
-        /// Проверяется запись телефона на корректность и если всё ок - то будет запись в БД
+        /// Проверяется запись телефона на ввод и если всё ок - то будет запись в БД
         /// </summary>
-        private void CheckAndWrite()
+        public void CheckAndWrite()
         {
             bool isOkay = true;
 
@@ -94,19 +127,16 @@ namespace OOP1
             if (isOkay)
             {
                 WriteChanges();
-                FillOldConsultOrders();
+                FillOldOrders();
                 consult.Rewrite(consultsOrders);
                 RefreshConsult();
             }
         }
 
-        private void ChangePhone(object sender, RoutedEventArgs e)
-        {
-            CheckAndWrite();
-
-        }
-
-        private void WriteChanges()
+        /// <summary>
+        /// Запись об изменении файла
+        /// </summary>
+        public void WriteChanges()
         {
 
             for (int i = 0; i < oldConsultOrders.Count; i++)
@@ -119,11 +149,25 @@ namespace OOP1
             }
         }
 
-        private void WriteNewData(int i)
+        /// <summary>
+        /// Старая база данных, для того, чтобы показывать что изменилось
+        /// </summary>
+        public void FillOldOrders()
         {
-            consultsOrders[i].TimeChangeOrder = DateTime.Now;
-            consultsOrders[i].TypeOfChange = "Правка";
-            consultsOrders[i].WhoChanged = "Консультант";
+
+            if (oldConsultOrders != null)
+            {
+                oldConsultOrders.Clear();
+            }
+
+            for (int i = 0; i < consultsOrders.Count; i++)
+            {
+                oldConsultOrders.Add(consultsOrders[i]);
+            }
+
         }
+
+        #endregion
+        
     }
 }

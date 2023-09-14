@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace OOP1
 {
@@ -22,24 +23,65 @@ namespace OOP1
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        #region Странички
+
         ConsultPage consultPage = new ConsultPage();
         ManagerPage managerPage = new ManagerPage();
+
+        #endregion
+
+        #region Конструктор этого класса
 
         public MainWindow()
         {
             InitializeComponent();
+
+            CheckOnExist(DataBase.pathToFile);
         }
 
+        #endregion
+
+        #region События
+
+        /// <summary>
+        /// Клик на кнопку Сотрудник
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Consult_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = consultPage;
-            consultPage.RefreshConsult();
         }
 
+        /// <summary>
+        /// Клик на кнопку Менеджер
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Manager_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = managerPage;
-            managerPage.RefreshManager();
         }
+
+        #endregion
+
+        #region Методы
+
+        /// <summary>
+        /// Проверка на существованме фалйа и создание если нету
+        /// </summary>
+        /// <param name="path">Путь файла</param>
+        static void CheckOnExist(string path)
+        {
+
+            if (!File.Exists(path))
+            {
+                File.Create(path);
+            }
+        }
+
+        #endregion
+
     }
 }

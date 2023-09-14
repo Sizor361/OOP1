@@ -18,6 +18,9 @@ namespace OOP1
 {
     interface NewOrder
     {
+        /// <summary>
+        /// Метод добавления нового сотрудника в БД
+        /// </summary>
         void AddNewOrder();
     }
 }

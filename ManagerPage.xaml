@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:OOP1"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="1390"
       Title="ManagerPage">
 
     <Grid>
@@ -48,7 +48,8 @@
         <ListView x:Name="DataBaseManagerList" 
                   Grid.Column="0"
                   Grid.ColumnSpan="7" 
-                  Grid.Row="2">
+                  Grid.Row="2"
+                  Loaded="EnterIntoPage">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Фамилия" Width="160">
@@ -58,9 +59,12 @@
                                     <TextBox    Name="ChangeSecondText"
                                                 Text="{Binding SecondName}" 
                                                 TextWrapping="Wrap" 
-                                                Margin="5"
-                                                Foreground="DarkOrange"
-                                                LostFocus="ChangeData">
+                                                Width="145"
+                                                MinWidth="145"
+                                                MaxWidth="145"
+                                                LostFocus="ChangeData" 
+                                                Margin="0,3,0,3" 
+                                                >
                                     </TextBox>
                                 </StackPanel>
                             </DataTemplate>
@@ -71,11 +75,13 @@
                             <DataTemplate>
                                 <StackPanel>
                                     <TextBox    Name="ChangeNameText"
-                            Text="{Binding Name}" 
-                            TextWrapping="Wrap" 
-                            Margin="5"
-                            Foreground="DarkOrange" 
-                            LostFocus="ChangeData">
+                                                Text="{Binding Name}" 
+                                                TextWrapping="Wrap" 
+                                                Width="145"
+                                                MinWidth="145"
+                                                MaxWidth="145"
+                                                LostFocus="ChangeData"
+                                                Margin="0,3,0,3">
                                     </TextBox>
                                 </StackPanel>
                             </DataTemplate>
@@ -88,48 +94,54 @@
                                     <TextBox    Name="ChangeMiddleNameText"
                                                 Text="{Binding MiddleName}" 
                                                 TextWrapping="Wrap" 
-                                                Margin="5"
-                                                Foreground="DarkOrange"
-                                                LostFocus="ChangeData">
+                                                Width="145"
+                                                MinWidth="145"
+                                                MaxWidth="145"
+                                                LostFocus="ChangeData"
+                                                Margin="0,3,0,3">
                                     </TextBox>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Телефон" Width="160">
+                    <GridViewColumn Header="Телефон" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
                                     <TextBox    Name="ChangeTelephoneText"
                                                 Text="{Binding Telephone}" 
                                                 TextWrapping="Wrap" 
-                                                Margin="5"
-                                                Foreground="DarkOrange"
-                                                LostFocus="ChangeData">
+                                                Width="105"
+                                                MinWidth="105"
+                                                MaxWidth="105"
+                                                LostFocus="ChangeData"
+                                                Margin="0,3,0,3">
                                     </TextBox>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Паспортные данные" Width="160">
+                    <GridViewColumn Header="Паспортные данные" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
                                     <TextBox    Name="ChangeDataPassportText"
                                                 Text="{Binding DataPassport}" 
                                                 TextWrapping="Wrap" 
-                                                Margin="5"
-                                                Foreground="DarkOrange"
-                                                LostFocus="ChangeData">
+                                                Width="105"
+                                                MinWidth="105"
+                                                MaxWidth="105"
+                                                LostFocus="ChangeData"
+                                                Margin="0,3,0,3">
                                     </TextBox>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Время изменения записи" DisplayMemberBinding="{Binding TimeChangeOrder}" Width="160"/>
-                    <GridViewColumn Header="Что поменялось" DisplayMemberBinding="{Binding WhichDataChange}" Width="160"/>
-                    <GridViewColumn Header="Тип изменений" DisplayMemberBinding="{Binding TypeOfChange}" Width="160"/>
-                    <GridViewColumn Header="Кто изменил" DisplayMemberBinding="{Binding WhoChanged}" Width="160"/>
+                    <GridViewColumn Header="Время изменения записи" DisplayMemberBinding="{Binding TimeChangeOrder}" Width="150"/>
+                    <GridViewColumn Header="Что поменялось" DisplayMemberBinding="{Binding WhichDataChange}" Width="300"/>
+                    <GridViewColumn Header="Тип изменений" DisplayMemberBinding="{Binding TypeOfChange}" Width="120"/>
+                    <GridViewColumn Header="Кто изменил" DisplayMemberBinding="{Binding WhoChanged}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>

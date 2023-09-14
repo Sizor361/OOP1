@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:OOP1"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="1390"
       Title="ConsultPage">
 
     <Grid>
@@ -23,33 +23,37 @@
 
 
         <ListView x:Name="DataBaseConsultList" 
+                  ItemsSource="{Binding consultsOrders}"
                   Grid.Column="0"
                   Grid.ColumnSpan="4" 
-                  Grid.Row="2" >
+                  Grid.Row="2" 
+                  Loaded="EnterIntoPage" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding SecondName}" Width="160"/>
                     <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Name}" Width="160"/>
                     <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding MiddleName}" Width="160"/>
-                    <GridViewColumn Header="Телефон" Width="160">
+                    <GridViewColumn Header="Телефон" Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel>
                                     <TextBox    x:Name="ChangeTelephoneText"
                                                 Text="{Binding Telephone}" 
                                                 TextWrapping="Wrap" 
-                                                Margin="5"
-                                                Foreground="DarkOrange" 
+                                                Margin="0,3,0,3"
+                                                Width="105"
+                                                MinWidth="105"
+                                                MaxWidth="105"
                                                 LostFocus="ChangePhone"/>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="Паспортные данные" DisplayMemberBinding="{Binding DataPassport}"  Width="160"/>
-                    <GridViewColumn Header="Время изменения записи" DisplayMemberBinding="{Binding TimeChangeOrder}" Width="160"/>
-                    <GridViewColumn Header="Что поменялось" DisplayMemberBinding="{Binding WhichDataChange}" Width="160"/>
-                    <GridViewColumn Header="Тип изменений" DisplayMemberBinding="{Binding TypeOfChange}" Width="160"/>
-                    <GridViewColumn Header="Кто изменил" DisplayMemberBinding="{Binding WhoChanged}" Width="160"/>
+                    <GridViewColumn Header="Паспортные данные" DisplayMemberBinding="{Binding DataPassport}"  Width="120"/>
+                    <GridViewColumn Header="Время изменения записи" DisplayMemberBinding="{Binding TimeChangeOrder}" Width="150"/>
+                    <GridViewColumn Header="Что поменялось" DisplayMemberBinding="{Binding WhichDataChange}" Width="300"/>
+                    <GridViewColumn Header="Тип изменений" DisplayMemberBinding="{Binding TypeOfChange}" Width="120"/>
+                    <GridViewColumn Header="Кто изменил" DisplayMemberBinding="{Binding WhoChanged}" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -13,32 +13,40 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace OOP1
 {
     /// <summary>
     /// Логика взаимодействия для ManagerPage.xaml
     /// </summary>
-    public partial class ManagerPage : Page, NewOrder
+    public partial class ManagerPage : Page, NewOrder, ChangeOrder
     {
+
+        #region Переменные
+
+        Manager manager = new Manager();
 
         ObservableCollection<Manager> managerOrders;
 
         List<Manager> oldManagerOrders = new List<Manager>();
 
-        Manager manager = new Manager();
+        #endregion
+
+        #region Конструктор этого класса
 
         public ManagerPage()
         {
             InitializeComponent();
-
-            RefreshManager();
-
-            FillOldManagerOrders();
-
-            DataContext = this;
         }
 
+        #endregion
+
+        #region Методы
+
+        /// <summary>
+        /// Обновление БД
+        /// </summary>
         public void RefreshManager()
         {
             managerOrders = manager.RefreshDB();
@@ -46,25 +54,39 @@ namespace OOP1
             DataBaseManagerList.ItemsSource = managerOrders;
         }
 
-        private void FillOldManagerOrders()
+        /// <summary>
+        /// Часть другого метода для записи доп. инфы при изменении записи
+        /// </summary>
+        /// <param name="i">Счётчик цикла</param>
+        private void WriteNewData(int i)
         {
-
-            if (oldManagerOrders != null)
-            {
-                oldManagerOrders.Clear();
-            }
-
-            for (int i = 0; i < managerOrders.Count; i++)
-            {
-                oldManagerOrders.Add(managerOrders[i]);
-            }
-            
+            managerOrders[i].TimeChangeOrder = DateTime.Now;
+            managerOrders[i].TypeOfChange = "Правка";
+            managerOrders[i].WhoChanged = "Менеджер";
         }
+
+        #endregion
+
+        #region Интерфейс NewOrder
+
+        /// <summary>
+        /// Добавляем в БД новую запись
+        /// </summary>
+        public void AddNewOrder()
+        {
+            managerOrders.Add(new Manager());
+            DataBaseManagerList.ItemsSource = managerOrders;
+            FillOldOrders();
+        }
+
+        #endregion
+
+        #region Интерфейс ChangeOrder
 
         /// <summary>
         /// Проверяется записи на корректность и если всё ок - то будет запись в БД
         /// </summary>
-        private void CheckAndWrite()
+        public void CheckAndWrite()
         {
             bool isOkay = true;
 
@@ -139,33 +161,22 @@ namespace OOP1
             if (isOkay)
             {
                 WriteChanges();
-                FillOldManagerOrders();
+                FillOldOrders();
                 manager.Rewrite(managerOrders);
                 RefreshManager();
             }
         }
 
-        private void ChangeData(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// При измененнии записи показываем информацию здесь
+        /// </summary>
+        public void WriteChanges()
         {
-
-            CheckAndWrite();
-
-        }
-
-        private void AddNewOrder(object sender, RoutedEventArgs e)
-        {
-            AddNewOrder();
-        }
-
-        private void WriteChanges()
-        {
-
             for (int i = 0; i < oldManagerOrders.Count; i++)
             {
 
                 if (managerOrders[i].Name != oldManagerOrders[i].Name)
                 {
-                    MessageBox.Show($"{managerOrders[i].Name} > {oldManagerOrders[i].Name}");
                     WriteNewData(i);
                     managerOrders[i].WhichDataChange = $"Имя c {oldManagerOrders[i].Name} на {managerOrders[i].Name}";
                 }
@@ -192,17 +203,64 @@ namespace OOP1
             }
         }
 
-        private void WriteNewData(int i)
+        /// <summary>
+        /// Обновляем старую БД чтобы узнать что изменилось
+        /// </summary>
+        public void FillOldOrders()
         {
-            managerOrders[i].TimeChangeOrder = DateTime.Now;
-            managerOrders[i].TypeOfChange = "Правка";
-            managerOrders[i].WhoChanged = "Менеджер";
+            if (oldManagerOrders != null)
+            {
+                oldManagerOrders.Clear();
+            }
+
+            int counter = 0;
+
+            if (managerOrders != null)
+            {
+                do
+                {
+                    oldManagerOrders.Add(managerOrders[counter]);
+                    counter++;
+                } while (counter < managerOrders.Count);
+            }
         }
 
-        public void AddNewOrder()
+        #endregion
+
+        #region События
+
+        /// <summary>
+        /// Изменяем поле
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChangeData(object sender, RoutedEventArgs e)
         {
-            managerOrders.Add(new Manager());
-            DataBaseManagerList.ItemsSource = managerOrders;
+            CheckAndWrite();
         }
+
+        /// <summary>
+        /// Кликаем на кнопку добавить сотрудника
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddNewOrder(object sender, RoutedEventArgs e)
+        {
+            AddNewOrder();
+        }
+
+        /// <summary>
+        /// Когда заходим на страницу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EnterIntoPage(object sender, RoutedEventArgs e)
+        {
+            RefreshManager();
+            FillOldOrders();
+        }
+
+        #endregion
+
     }
 }

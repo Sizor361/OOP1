@@ -15,7 +15,7 @@
         MaxWidth="2000"
         
         Height="600" 
-        Width="1000">
+        Width="1500">
 
     <Grid>
         <Grid.ColumnDefinitions>

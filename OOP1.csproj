@@ -67,6 +67,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ChangeOrder.cs" />
     <Compile Include="Consult.cs" />
     <Compile Include="ConsultPage.xaml.cs">
       <DependentUpon>ConsultPage.xaml</DependentUpon>
